@@ -1028,7 +1028,6 @@ AI remains optional and must never control core gameplay logic.
 
 ## 📜 License
 
-Add your project's chosen license here.
 
 ---
 
