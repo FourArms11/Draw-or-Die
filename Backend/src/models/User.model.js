@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -34,6 +35,25 @@ const userSchema = new mongoose.Schema({
         }
     }
 });
+
+userSchema.pre("save", async function () {
+    if (this.isModified("passwordHash")) {
+        this.passwordHash = await bcrypt.hash(
+            this.passwordHash,
+            10
+        );
+    }
+});
+
+
+userSchema.methods.comparePassword = async function (candidatePassword) {
+    return bcrypt.compare(
+        candidatePassword,
+        this.passwordHash
+    );
+};
+
+
 
 
 

@@ -1,0 +1,340 @@
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+.login-page {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 40px 20px;
+
+  /* Your generated background image */
+  background-image: url("/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  font-family: "Patrick Hand", cursive;
+}
+
+
+/* ================= HEADER ================= */
+
+.game-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.game-header h1 {
+  margin: 0;
+
+  font-family: "Permanent Marker", cursive;
+
+  font-size: 4rem;
+
+  letter-spacing: 5px;
+
+  color: #111;
+}
+
+.game-header h1 span {
+  font-size: 2.5rem;
+}
+
+.game-header h1 strong {
+  color: #e32929;
+}
+
+.game-header p {
+  margin-top: 10px;
+
+  font-size: 1.5rem;
+
+  color: #222;
+}
+
+.game-header p strong {
+  color: #d92727;
+}
+
+
+/* ================= LOGIN CARD ================= */
+
+.login-card {
+  width: 100%;
+  max-width: 650px;
+
+  padding: 35px 60px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  border: 3px solid #222;
+
+  border-radius: 25px;
+
+  box-shadow:
+    7px 7px 0px rgba(0, 0, 0, 0.25);
+
+  backdrop-filter: blur(5px);
+}
+
+
+/* ================= TITLE ================= */
+
+.login-card h2 {
+  width: fit-content;
+
+  margin: 0 auto 30px;
+
+  padding: 8px 35px;
+
+  background: #151515;
+
+  color: white;
+
+  font-family: "Permanent Marker", cursive;
+
+  font-size: 1.7rem;
+
+  border-radius: 5px;
+}
+
+
+/* ================= INPUT ================= */
+
+.input-group {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  width: 100%;
+
+  padding: 18px 50px;
+
+  border: 2px solid #777;
+
+  border-radius: 12px;
+
+  outline: none;
+
+  font-size: 1.2rem;
+
+  font-family: Arial, sans-serif;
+
+  transition: 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #1f5fd0;
+
+  box-shadow: 0 0 0 3px rgba(31, 95, 208, 0.15);
+}
+
+.input-icon {
+  position: absolute;
+
+  left: 15px;
+
+  z-index: 2;
+}
+
+.show-password {
+  position: absolute;
+
+  right: 15px;
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  font-size: 1.2rem;
+}
+
+
+/* ================= OPTIONS ================= */
+
+.login-options {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 25px;
+
+  font-size: 1.1rem;
+}
+
+.login-options label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.forgot-password {
+  border: none;
+
+  background: transparent;
+
+  color: #1e57b7;
+
+  font-size: 1.1rem;
+
+  cursor: pointer;
+}
+
+
+/* ================= LOGIN BUTTON ================= */
+
+.login-btn {
+  width: 100%;
+
+  padding: 16px;
+
+  border: 3px solid #111;
+
+  border-radius: 12px;
+
+  background: #1759c7;
+
+  color: white;
+
+  font-family: "Permanent Marker", cursive;
+
+  font-size: 1.6rem;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 0 #111;
+
+  transition: 0.15s;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+}
+
+.login-btn:active {
+  transform: translateY(4px);
+
+  box-shadow: 0 1px 0 #111;
+}
+
+
+/* ================= DIVIDER ================= */
+
+.divider {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin: 30px 0;
+}
+
+.divider span {
+  flex: 1;
+
+  height: 1px;
+
+  background: #777;
+}
+
+.divider p {
+  margin: 0;
+
+  font-size: 1.3rem;
+}
+
+
+/* ================= GUEST ================= */
+
+.guest-btn {
+  width: 100%;
+
+  padding: 15px;
+
+  background: white;
+
+  border: 2px solid #1f5fd0;
+
+  border-radius: 12px;
+
+  font-family: "Permanent Marker", cursive;
+
+  font-size: 1.3rem;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.guest-btn:hover {
+  background: #f1f6ff;
+
+  transform: translateY(-2px);
+}
+
+
+/* ================= REGISTER ================= */
+
+.register-text {
+  margin-top: 30px;
+
+  font-size: 1.3rem;
+
+  background: rgba(255, 255, 255, 0.8);
+
+  padding: 5px 20px;
+
+  border-radius: 10px;
+}
+
+.register-text p {
+  margin: 0;
+}
+
+.register-text span {
+  color: #d84a22;
+
+  cursor: pointer;
+
+  font-weight: bold;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+
+  .game-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .login-card {
+    padding: 30px 20px;
+  }
+
+  .login-options {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+}
