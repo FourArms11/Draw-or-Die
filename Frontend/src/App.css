@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+:root { font-family: "Space Grotesk", sans-serif; color: #171717; background: #f7f5ef; font-synthesis: none; }
+:root[data-theme="dark"] { color: #f5f2e9; background: #171717; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+.app-shell { min-height: 100vh; overflow: hidden; background: radial-gradient(circle at 80% 12%, #e8e1d3 0, transparent 29%), #f7f5ef; }
+[data-theme="dark"] .app-shell { background: radial-gradient(circle at 80% 12%, #343129 0, transparent 29%), #171717; }
+.topbar { max-width: 1180px; margin: auto; padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; }
+.brand { display: flex; align-items: center; gap: 10px; border: 0; background: none; color: inherit; font-weight: 700; letter-spacing: 1.5px; font-size: 1.05rem; }
+.brand b, em, .eyebrow { color: #df583e; font-style: normal; }
+.brand-mark { display: grid; place-items: center; width: 34px; height: 34px; border: 2px solid currentColor; border-radius: 50%; transform: rotate(-15deg); }
+.topbar-actions, .hero-actions { display: flex; align-items: center; gap: 10px; }
+.theme-toggle { border: 1px solid #c8c2b7; background: transparent; color: inherit; border-radius: 50%; width: 38px; height: 38px; font-size: 1.2rem; }
+.button { border: 1px solid transparent; border-radius: 4px; padding: 11px 19px; font-weight: 600; transition: transform .2s, box-shadow .2s; }
+.button:hover { transform: translateY(-2px); }
+.button-small { padding: 9px 15px; font-size: .88rem; }
+.button-large { padding: 15px 23px; font-size: 1rem; }
+.button-primary { background: #df583e; color: white; box-shadow: 3px 3px 0 #171717; }
+.button-outline { background: transparent; color: inherit; border-color: currentColor; }
+.button-ghost { background: transparent; border-color: #c8c2b7; color: inherit; }
+.welcome-user { font-family: "DM Mono", monospace; font-size: .8rem; }
+.hero { max-width: 1180px; margin: auto; padding: 95px 32px 125px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 60px; }
+.eyebrow { font: 500 .72rem "DM Mono", monospace; letter-spacing: 2px; margin: 0 0 20px; }
+.hero h1 { margin: 0; font-size: clamp(3.8rem, 8vw, 7rem); line-height: .93; letter-spacing: -5px; max-width: 670px; }
+.hero-description { max-width: 420px; margin: 28px 0; line-height: 1.6; color: #716d65; }
+[data-theme="dark"] .hero-description { color: #aaa59b; }
+.notice, .success-message { color: #2a7653; font-weight: 600; }
+.doodle-board { position: relative; min-height: 380px; border: 2px solid #171717; background: #e4ded0; transform: rotate(3deg); box-shadow: 10px 10px 0 #df583e; }
+[data-theme="dark"] .doodle-board { background: #35332e; border-color: #f5f2e9; }
+.doodle { position: absolute; }
+.doodle-star { top: 16%; left: 16%; color: #df583e; font-size: 4rem; }
+.doodle-circle { top: 17%; right: 15%; width: 90px; height: 90px; border: 4px solid #457fba; border-radius: 50%; }
+.doodle-arrow { bottom: 20%; left: 15%; color: #457fba; font-size: 5rem; transform: rotate(-25deg); }
+.doodle-word { top: 29%; left: 34%; font: 700 3rem "DM Mono", monospace; line-height: .9; transform: rotate(-8deg); }
+.doodle-word b { color: #df583e; }
+.doodle-scribble { bottom: 15%; right: 18%; color: #df583e; font-size: 6rem; transform: rotate(-10deg); }
+.feature-row { border-top: 1px solid #c8c2b7; max-width: 1180px; margin: auto; padding: 45px 32px 70px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 45px; }
+.feature-row article span { font: .75rem "DM Mono", monospace; color: #df583e; }
+.feature-row h2 { margin: 14px 0 8px; font-size: 1.35rem; }
+.feature-row p { margin: 0; color: #716d65; line-height: 1.5; font-size: .93rem; }
+[data-theme="dark"] .feature-row p { color: #aaa59b; }
+.modal-backdrop { position: fixed; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(20, 18, 15, .68); z-index: 5; }
+.auth-modal { position: relative; width: min(100%, 440px); padding: 42px; background: #f7f5ef; color: #171717; box-shadow: 8px 8px 0 #df583e; }
+.modal-close { position: absolute; top: 12px; right: 15px; border: 0; background: none; color: inherit; font-size: 1.7rem; }
+.auth-content h2 { margin: 0; font-size: 2.3rem; letter-spacing: -1px; }
+.auth-subtitle { margin: 8px 0 24px; color: #716d65; }
+.auth-form { display: grid; gap: 17px; }
+.auth-form label { display: grid; gap: 7px; font-size: .85rem; font-weight: 600; }
+.auth-form input { width: 100%; padding: 12px; border: 1px solid #aaa398; border-radius: 3px; background: white; color: #171717; outline-color: #df583e; }
+.password-field { position: relative; }
+.password-field input { padding-right: 60px; }
+.password-field button { position: absolute; right: 8px; top: 7px; border: 0; background: none; color: #df583e; font-size: .75rem; font-weight: 600; }
+.auth-form .button { margin-top: 5px; }
+.auth-switch { text-align: center; font-size: .85rem; margin: 25px 0 0; }
+.auth-switch button { border: 0; background: none; color: #df583e; font-weight: 700; padding: 0; }
+.error-message { background: #f9dfd8; color: #a02e1d; padding: 10px; font-size: .85rem; }
+
+@media (max-width: 700px) {
+  .topbar { padding: 18px 20px; }
+  .brand span:last-child { display: none; }
+  .hero { padding: 70px 20px 90px; grid-template-columns: 1fr; gap: 55px; }
+  .hero h1 { font-size: clamp(3.5rem, 17vw, 6rem); }
+  .doodle-board { min-height: 290px; }
+  .feature-row { padding: 35px 20px 55px; grid-template-columns: 1fr; gap: 28px; }
+  .welcome-user { display: none; }
+  .auth-modal { padding: 36px 24px 30px; }
+}

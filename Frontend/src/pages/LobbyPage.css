@@ -1,0 +1,138 @@
+.lobby-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-image: url("/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: "Inter", sans-serif;
+}
+
+.lobby-header {
+  width: min(100%, 820px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lobby-page .brand-logo {
+  width: 90px;
+}
+
+.user-chip {
+  padding: 10px 18px;
+  border: 3px solid #111;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 6px 0 rgba(17, 17, 17, 0.3);
+  font-weight: 800;
+}
+
+.lobby-card {
+  width: min(100%, 820px);
+  padding: 28px 28px 20px;
+  border: 3px solid #111;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 7px 7px 0 rgba(17, 17, 17, 0.25);
+}
+
+.lobby-card h2 {
+  margin: 0 0 24px;
+  text-align: center;
+  font-family: "Bungee", cursive;
+  letter-spacing: 2px;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+}
+
+.lobby-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.primary-btn,
+.secondary-btn,
+.logout-btn {
+  border: 3px solid #111;
+  border-radius: 14px;
+  font-family: "Bungee", cursive;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 18px 20px;
+  font-size: 1.2rem;
+}
+
+.primary-btn {
+  background: #e32929;
+  color: white;
+  box-shadow: 0 5px 0 #111;
+}
+
+.secondary-btn {
+  background: #0b3a8d;
+  color: white;
+  box-shadow: 0 5px 0 #111;
+}
+
+.room-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+}
+
+.room-form input {
+  width: 100%;
+  padding: 17px 16px;
+  border: 2px solid #777;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+.lobby-status {
+  margin: 18px 0 0;
+  text-align: center;
+  color: #0d3b7c;
+  font-weight: 700;
+}
+
+.logout-btn {
+  margin-top: 24px;
+  padding: 12px 24px;
+  background: white;
+  color: #111;
+  box-shadow: 0 4px 0 #111;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover,
+.logout-btn:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .lobby-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .room-form {
+    grid-template-columns: 1fr;
+  }
+}

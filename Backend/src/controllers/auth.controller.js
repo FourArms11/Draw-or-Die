@@ -30,18 +30,15 @@ async function userRegister(req, res) {
 
 
 async function userLogin(req, res) {
-    const { identifier, password } = req.body;
-
     try {
-
+        const identifier = (req.body?.identifier ?? req.body?.email ?? req.body?.username ?? "").trim();
+        const password = req.body?.password;
 
         if (!identifier || !password) {
             return res.status(400).json({
                 message: "Username/email and password are required"
             });
         }
-
-
 
         const user = await UserModel.findOne({
             $or: [
@@ -50,19 +47,13 @@ async function userLogin(req, res) {
             ]
         });
 
-
-
         if (!user) {
             return res.status(401).json({
                 message: "Invalid email/username or password"
             });
         }
 
-
-
         const isPasswordValid = await user.comparePassword(password);
-
-
 
         if (!isPasswordValid) {
             return res.status(401).json({
@@ -70,14 +61,11 @@ async function userLogin(req, res) {
             });
         }
 
-
-
         const token = jwt.sign(
             { id: user._id },
             config.JWT_SECRET,
             { expiresIn: "7d" }
         );
-
 
         return res
             .status(200)
@@ -87,7 +75,6 @@ async function userLogin(req, res) {
             .json({
                 message: "User logged in successfully"
             });
-
     } catch (error) {
         console.error("LOGIN ERROR:", error);
 
@@ -97,12 +84,13 @@ async function userLogin(req, res) {
     }
 }
 async function userLogout(req, res) {
+    return
     res.clearCookie("token").status(200).json({ message: "User logged out successfully" });
 }
 
 
 export {
     userRegister,
-    userLogin
+    userLogin,
+    userLogout
 };
-

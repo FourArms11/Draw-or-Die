@@ -1,108 +1,39 @@
 import { useState } from "react";
-import "./LoginPage.css";
 
-const LoginPage = () => {
+function LoginPage({ onSubmit, onRegister, notice }) {
+  const [form, setForm] = useState({ identifier: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // API login logic will come here later
-    console.log("Login submitted");
+  const submit = async (event) => {
+    event.preventDefault();
+    setError("");
+    setLoading(true);
+    try {
+      await onSubmit(form);
+    } catch (requestError) {
+      setError(requestError.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="login-page">
-      {/* Logo */}
-      <div className="game-header">
-        <h1>
-          DRAW <span>OR</span> <strong>DIE</strong>
-        </h1>
-
-        <p>
-          Draw fast. Guess faster. <strong>Survive.</strong>
-        </p>
-      </div>
-
-      {/* Login Card */}
-      <div className="login-card">
-        <h2>WELCOME BACK!</h2>
-
-        <form onSubmit={handleSubmit}>
-          {/* Email / Username */}
-          <div className="input-group">
-            <span className="input-icon">👤</span>
-
-            <input
-              type="text"
-              id="identifier"
-              name="identifier"
-              placeholder="Email or Username"
-              required
-            />
-          </div>
-
-          {/* Password */}
-          <div className="input-group">
-            <span className="input-icon">🔒</span>
-
-            <input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-
-            <button
-              type="button"
-              className="show-password"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "🙈" : "👁"}
-            </button>
-          </div>
-
-          {/* Options */}
-          <div className="login-options">
-            <label>
-              <input type="checkbox" />
-              Remember me
-            </label>
-
-            <button type="button" className="forgot-password">
-              Forgot password?
-            </button>
-          </div>
-
-          {/* Login */}
-          <button type="submit" className="login-btn">
-            LOGIN
-          </button>
-        </form>
-
-        {/* Divider */}
-        <div className="divider">
-          <span></span>
-          <p>OR</p>
-          <span></span>
-        </div>
-
-        {/* Guest */}
-        <button className="guest-btn">
-          🎮 PLAY AS GUEST
-        </button>
-      </div>
-
-      {/* Register Link */}
-      <div className="register-text">
-        <p>
-          Don't have an account?
-          <span> Create one →</span>
-        </p>
-      </div>
+    <div className="auth-content">
+      <p className="eyebrow">WELCOME BACK</p>
+      <h2>Ready to play?</h2>
+      <p className="auth-subtitle">Log in to jump back into the fun.</p>
+      {notice && <p className="success-message">{notice}</p>}
+      {error && <p className="error-message" role="alert">{error}</p>}
+      <form onSubmit={submit} className="auth-form">
+        <label>Email or username<input value={form.identifier} onChange={(e) => setForm({ ...form, identifier: e.target.value })} required autoComplete="username" /></label>
+        <label>Password<div className="password-field"><input type={showPassword ? "text" : "password"} value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required autoComplete="current-password" /><button type="button" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</button></div></label>
+        <button className="button button-primary button-large" disabled={loading}>{loading ? "Logging in..." : "Log in"}</button>
+      </form>
+      <p className="auth-switch">New here? <button onClick={onRegister}>Create an account</button></p>
     </div>
   );
-};
+}
 
 export default LoginPage;
