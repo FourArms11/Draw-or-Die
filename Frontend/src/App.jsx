@@ -3,14 +3,13 @@ import "./App.css";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { loginUser, registerUser } from "./services/api";
-
-const SAVED_USER_KEY = "draw-or-die-user";
+import { useAuth } from "./context/AuthContext";
 
 function App() {
   const [authModal, setAuthModal] = useState(null);
-  const [user, setUser] = useState(() => localStorage.getItem(SAVED_USER_KEY));
   const [theme, setTheme] = useState(() => localStorage.getItem("draw-or-die-theme") || "light");
   const [notice, setNotice] = useState("");
+  const { user, login, logout } = useAuth();
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -30,15 +29,9 @@ function App() {
 
   const handleLogin = async (form) => {
     await loginUser(form);
-    localStorage.setItem(SAVED_USER_KEY, form.identifier);
-    setUser(form.identifier);
+    login(form.identifier);
     setAuthModal(null);
     setNotice("");
-  };
-
-  const logout = () => {
-    localStorage.removeItem(SAVED_USER_KEY);
-    setUser(null);
   };
 
   return (
