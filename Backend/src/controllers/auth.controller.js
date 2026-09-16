@@ -28,7 +28,6 @@ async function userRegister(req, res) {
     } 
 }
 
-
 async function userLogin(req, res) {
     try {
         const identifier = (req.body?.identifier ?? req.body?.email ?? req.body?.username ?? "").trim();
@@ -83,11 +82,18 @@ async function userLogin(req, res) {
         });
     }
 }
-async function userLogout(req, res) {
-    return
-    res.clearCookie("token").status(200).json({ message: "User logged out successfully" });
-}
+const userLogout = (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+    });
 
+    return res.status(200).json({
+        success: true,
+        message: "User logged out successfully",
+    });
+};
 
 export {
     userRegister,
