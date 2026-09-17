@@ -36,13 +36,8 @@ Missing environment variables originally caused confusing errors later in startu
 
 Failing early makes configuration problems easier to identify and prevents the server from running in a partially configured state.
 
-## 4. Registration and password security
 
-User registration was implemented with Mongoose. The user model stores unique email and username values, account creation time, and game statistics.
-
-Passwords cannot be stored as plain text, so `bcrypt` hashes passwords before they are saved. The model also provides password comparison for login. Duplicate email or username values return a controlled client error instead of creating duplicate accounts.
-
-## 5. Login and authentication
+## 4. Login and authentication
 
 Login was added after registration. Users can log in with either an email address or username. During frontend/backend integration, request field names were not always consistent, so the backend supports `identifier` as well as the older email/username forms.
 
@@ -54,7 +49,7 @@ The API validates missing credentials and returns suitable status codes:
 
 Successful login creates a JWT and stores it in an HTTP-only cookie.
 
-## 6. CORS and browser cookies
+## 5. CORS and browser cookies
 
 The Vite frontend and Express backend run on different local origins. Browser security rules caused requests and cookies to fail until both sides were configured correctly.
 
@@ -67,24 +62,6 @@ The fix required:
 
 Without all of these settings, login could appear successful in server logs while the browser failed to retain the cookie.
 
-## 7. Frontend integration and home page
-
-Axios services were added so the React registration and login forms communicate with the backend. The home page was then added with:
-
-- Draw or Die branding.
-- Login and registration modals.
-- Light and dark theme switching.
-- Logged-in user display.
-- Create Game and Join Game placeholder buttons.
-- Introductory game feature sections.
-
-The Create Game and Join Game buttons currently display a coming-soon message because the multiplayer room flow has not yet been connected to the page.
-
-## 8. Planned multiplayer work
-
-REST endpoints are used for registration and login. Socket.IO is intended for rooms, drawing strokes, guesses, chat, timers, turns, and player presence.
-
-The project includes the initial structure for room management, game state, scoring, word selection, and socket handlers. These areas still need to be connected and tested with multiple clients. Socket authentication will also be required so one player cannot claim another player's identity.
 
 ## Current progress
 

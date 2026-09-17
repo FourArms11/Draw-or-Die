@@ -80,7 +80,7 @@ button { cursor: pointer; }
   .drawing-page-intro .button { margin-bottom: 40px; }
   .drawing-page-intro h1 { letter-spacing: -2px; }
   .drawing-heading, .drawing-tools { align-items: flex-start; flex-direction: column; }
-  .drawing-canvas { height: 300px; min-height: 0; }
+  .drawing-canvas { width: calc(100% - 40px); height: 350px; min-height: 0; margin-top: 30px; }
   .welcome-user { display: none; }
   .auth-modal { padding: 36px 24px 30px; }
 }
@@ -107,6 +107,20 @@ button { cursor: pointer; }
   .standalone-page { padding-top: 55px; }
   .auth-card { padding: 28px 22px; }
 }
+
+/* Keep the first canvas page intentionally simple until game-room features arrive. */
+.drawing-page { max-width: 900px; padding-top: 45px; }
+.drawing-page-intro { margin-bottom: 28px; }
+.drawing-page-intro .button { margin-bottom: 25px; }
+.drawing-page-intro h1 { font-size: 32px; letter-spacing: 0; }
+.drawing-page-intro p:not(.eyebrow) { margin-top: 10px; color: #aeb4be; }
+.drawing-section { padding: 0 0 40px; }
+.drawing-heading { margin-bottom: 14px; }
+.drawing-heading h2 { font-size: 20px; }
+.drawing-tools { padding: 12px; margin-bottom: 10px; border: 1px solid #46505c; background: #171c22; font-family: Arial, sans-serif; }
+.color-swatch { width: 22px; height: 22px; }
+.drawing-canvas { height: 380px; border: 1px solid #46505c; }
+.drawing-canvas { display: block; width: min(900px, calc(100% - 40px)); height: 500px; margin: 45px auto 0; }
 
 /* Shared dark MVP theme for the landing and authentication screens. */
 :root { color: #e7e9ed; background: #11151a; }
