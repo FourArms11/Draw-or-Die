@@ -21,17 +21,16 @@ function LoginPage({ onSubmit, onRegister, notice }) {
 
   return (
     <div className="auth-content">
-      <p className="eyebrow">WELCOME BACK</p>
-      <h2>Ready to play?</h2>
-      <p className="auth-subtitle">Log in to jump back into the fun.</p>
+      <h2>Login</h2>
+      <p className="auth-subtitle">Enter your details to continue</p>
       {notice && <p className="success-message">{notice}</p>}
       {error && <p className="error-message" role="alert">{error}</p>}
       <form onSubmit={submit} className="auth-form">
-        <label>Email or username<input value={form.identifier} onChange={(e) => setForm({ ...form, identifier: e.target.value })} required autoComplete="username" /></label>
-        <label>Password<div className="password-field"><input type={showPassword ? "text" : "password"} value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required autoComplete="current-password" /><button type="button" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</button></div></label>
-        <button className="button button-primary button-large" disabled={loading}>{loading ? "Logging in..." : "Log in"}</button>
+        <label>Username<input value={form.identifier} onChange={(e) => setForm({ ...form, identifier: e.target.value })} placeholder="Enter your username" required autoComplete="username" /></label>
+        <label>Password<div className="password-field"><input type={showPassword ? "text" : "password"} value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="Enter your password" required autoComplete="current-password" /><button type="button" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</button></div></label>
+        <button className="button button-primary button-large" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
       </form>
-      <p className="auth-switch">New here? <button onClick={onRegister}>Create an account</button></p>
+      <p className="auth-switch">Don't have an account? <button onClick={onRegister}>Sign up</button></p>
     </div>
   );
 }

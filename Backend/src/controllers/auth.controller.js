@@ -5,7 +5,21 @@ import config from "../config/config.js";
 
 async function userRegister(req, res) {
     try{
-    const { email, username, password } = req.body;
+    const email = req.body?.email?.trim();
+    const username = req.body?.username?.trim();
+    const password = req.body?.password;
+
+    if (!email || !username || !password) {
+        return res.status(400).json({
+            message: "Username, email, and password are required"
+        });
+    }
+
+    if (password.length < 6) {
+        return res.status(400).json({
+            message: "Password must be at least 6 characters"
+        });
+    }
 
     const isUserAlreadyExists = await UserModel.findOne({ $or: [{ email }, { username }] });
 
@@ -27,7 +41,6 @@ async function userRegister(req, res) {
         res.status(500).json({ message: "Internal server error" });
     } 
 }
-
 
 async function userLogin(req, res) {
     try {
@@ -83,11 +96,18 @@ async function userLogin(req, res) {
         });
     }
 }
-async function userLogout(req, res) {
-    return
-    res.clearCookie("token").status(200).json({ message: "User logged out successfully" });
-}
+const userLogout = (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+    });
 
+    return res.status(200).json({
+        success: true,
+        message: "User logged out successfully",
+    });
+};
 
 export {
     userRegister,

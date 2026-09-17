@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
 const SAVED_USER_KEY = "draw-or-die-user";
 
@@ -24,12 +24,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-export function useAuth() {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error("useAuth must be used inside an AuthProvider");
-  }
-
-  return context;
-}
+export { AuthContext };

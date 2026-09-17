@@ -297,6 +297,12 @@ npm run dev
 
 ---
 
+## 📓 Development Journal
+
+The [development journal](DEVELOPMENT_JOURNAL.md) records the problems encountered so far, including the Node.js/MongoDB DNS issue, authentication, CORS and cookie configuration, frontend integration, and completed project progress.
+
+---
+
 ## 🔑 Environment Variables
 
 ### Backend (`Backend/.env`)

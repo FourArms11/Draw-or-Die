@@ -20,9 +20,8 @@ function RegisterPage({ onSubmit, onLogin }) {
 
   return (
     <div className="auth-content">
-      <p className="eyebrow">JOIN THE CREW</p>
-      <h2>Make your mark.</h2>
-      <p className="auth-subtitle">Create an account and start drawing.</p>
+      <h2>Register</h2>
+      <p className="auth-subtitle">Create an account to continue</p>
       {error && <p className="error-message" role="alert">{error}</p>}
       <form onSubmit={submit} className="auth-form">
         <label>Username<input value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} required autoComplete="username" /></label>
