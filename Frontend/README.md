@@ -1,16 +1,19 @@
-# React + Vite
+# Draw or Die frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The frontend is a Vite/React client for the Draw or Die drawing-and-guessing game.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+The current client flow is intentionally usable before the real-time room layer is connected:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Register or log in.
+2. From Home, choose **Create game** and set rounds, round time, and player limit.
+3. Choose **Join game** to enter a host's room code.
+4. Open **Board** from the navigation at any time, or continue into the local board preview from either game flow.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The board supports mouse and touch pointer input, color selection, brush size, erasing, undo, clear, and a local round timer. Room settings and the board are currently local UI state; Socket.IO synchronization will be connected in the multiplayer milestone.

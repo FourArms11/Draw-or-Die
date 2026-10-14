@@ -78,4 +78,22 @@ Completed so far:
 9. Axios frontend integration.
 10. Initial home page, authentication modals, and theme switching.
 
-The next milestone is to finish the Socket.IO room and game flow and test it with multiple connected clients, refreshes, disconnects, and server restarts.
+## 7. Playable frontend game shell
+
+The frontend now has a proper authenticated game journey instead of a single placeholder drawing screen:
+
+- Login/register leads to the home dashboard.
+- Create Game has controls for rounds, time per round, and player limit.
+- Join Game accepts and normalizes a room code.
+- Board is a separate page and can be opened from the top navigation.
+- The board works locally with mouse and touch input, multiple colors, brush size, eraser, undo, clear, and a visible round timer.
+
+Create and join do not yet connect the board to a Socket.IO room. They intentionally open the local board preview so the interaction and drawing surface can be tested before network synchronization is enabled.
+
+The next milestone is to persist room settings through Socket.IO, connect the room lifecycle to the existing backend handlers, and test multiple connected clients, refreshes, disconnects, and server restarts.
+
+## 8. Local waiting room
+
+The create-game flow now generates a unique local room code and opens a waiting room. The host can see the selected settings, current player capacity, the host player entry, and a copy-code action while other players are expected to join. The room is intentionally not connected to the board or multiplayer transport yet.
+
+The board preview was also simplified by removing the local countdown clock. It remains independently openable and keeps only the drawing tools needed to validate the canvas experience.
