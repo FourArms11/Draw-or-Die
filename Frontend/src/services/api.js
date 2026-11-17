@@ -13,7 +13,7 @@ const getApiError = (error, fallbackMessage) => {
     return new Error(error.response.data.message);
   }
 
-  if (error.request) {
+  if (error.request && !error.response) {
     return new Error("Cannot connect to the backend. Start the Backend server and try again.");
   }
 
@@ -35,6 +35,24 @@ export const loginUser = async (credentials) => {
     return response.data;
   } catch (error) {
     throw getApiError(error, "Login failed");
+  }
+};
+
+export const logoutUser = async () => {
+  try {
+    const response = await api.post("/api/auth/logout");
+    return response.data;
+  } catch (error) {
+    throw getApiError(error, "Logout failed");
+  }
+};
+
+export const getMe = async () => {
+  try {
+    const response = await api.get("/api/auth/me");
+    return response.data;
+  } catch (error) {
+    throw getApiError(error, "Session expired or invalid");
   }
 };
 

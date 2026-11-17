@@ -97,3 +97,44 @@ The next milestone is to persist room settings through Socket.IO, connect the ro
 The create-game flow now generates a unique local room code and opens a waiting room. The host can see the selected settings, current player capacity, the host player entry, and a copy-code action while other players are expected to join. The room is intentionally not connected to the board or multiplayer transport yet.
 
 The board preview was also simplified by removing the local countdown clock. It remains independently openable and keeps only the drawing tools needed to validate the canvas experience.
+
+## 9. Real-Time Multiplayer Milestone Completion
+
+The local shell has been successfully converted into a complete, reliable online multiplayer game without altering the original dark/red theme or folder structure:
+
+1. **Backend Real-Time Architecture**:
+   - `RoomManager.js`: Implemented in-memory room management, unique code generation, host reassignments, and abandoned room garbage collection.
+   - `GameStateManager.js`: Added turn progression, drawer assignment, word selection, server-authoritative countdown timers, scoring, round end reveals, and match completion.
+   - `wordBank.js`: Curated word bank with word masking utility for guessers.
+   - `scoring.js`: Time-based dynamic scoring awarding higher points for rapid guesses and rewarding drawers for recognizable art.
+   - `sockets/`: Modularized handlers for rooms, game lifecycle, draw synchronization, and room chat.
+   - `auth.middleware.js`: Secure JWT verification for both Express routes and Socket.IO handshakes.
+   - `Match.model.js`: Match history persistence and cumulative player stats updates in MongoDB.
+
+2. **Frontend Real-Time Integration**:
+   - Integrated `socket.io-client` with auto-reconnection and session persistence.
+   - `DrawingBoard.jsx`: Pointer-based drawing with normalized (0..1) coordinate projection across varying client resolutions, stroke batching, undo, and canvas clear.
+   - `ChatBox.jsx`: Room-isolated chat and guess submissions. Added spoiler protection so players who already guessed can chat privately without leaking the answer.
+   - `WaitingRoom`: Live player lists, host indicators, and host-only game start validation.
+   - `DrawingPage.jsx`: 3-column responsive layout with scoreboard, drawing canvas, real-time chat, round banner overlays, and final podium leaderboard.
+
+3. **Verification**:
+   - Verified frontend linting (`npm run lint`) and production build (`npm run build`).
+   - Implemented automated end-to-end multiplayer test suite (`Backend/src/test_e2e.js`) covering user registration, login, cookie sessions, socket auth, room creation, multi-client joining, host-only game start, drawer/guesser secret word isolation, stroke synchronization, guess scoring, and disconnect handling.
+
+## 10. Smooth Onboarding Flow & Soothing Ambient Music
+
+1. **Seamless Login & Signup Journey**:
+   - Registration now automatically establishes the authenticated cookie session and navigates directly to the Home page, removing redundant manual login steps.
+   - Login navigates directly to the Home dashboard with authenticated controls.
+
+2. **Lobby & Host Game Control**:
+   - Real-time waiting room lists each connected player as they join or leave with avatar initials, usernames, and a `(You)` tag for self-identification.
+   - The "Start Now ➔" button is exclusively accessible to the host. Non-host players see an informative status indicator waiting for the host to launch the game.
+
+3. **Soothing Ambient Lo-Fi Chill Synthesizer (`chillAudio.js`)**:
+   - Built a lightweight, dependency-free procedural audio generator using the native Web Audio API.
+   - Generates peaceful, warm lo-fi chords (Fmaj7 - Dm9 - Bbmaj7 - C9sus) with dual detuned sine/triangle oscillators, a 680Hz low-pass filter, subtle feedback delay, and randomized pentatonic chimes.
+   - Controlled via a minimalistic toggle button in the top navigation bar with pause/resume and zero network download overhead.
+
+

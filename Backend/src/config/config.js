@@ -20,7 +20,9 @@ if (!process.env.JWT_SECRET) {
 const config = {
     JWT_SECRET: process.env.JWT_SECRET,
     MONGO_URI: process.env.MONGO_URI,
-    PORT: process.env.PORT || 3000,
+    PORT: Number(process.env.PORT) || 3000,
+    FRONTEND_URL: process.env.FRONTEND_URL || process.env.CORS_ORIGIN || "http://localhost:5173",
+    NODE_ENV: process.env.NODE_ENV || "development",
 };
 
 export default config;

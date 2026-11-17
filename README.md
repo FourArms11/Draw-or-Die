@@ -1,32 +1,89 @@
 # Draw or Die
 
-Draw or Die is an interactive multiplayer drawing-and-guessing game. The project is split into a React/Vite frontend and an Express backend with MongoDB and planned Socket.IO room synchronization.
+Draw or Die is an online multiplayer drawing-and-guessing game built with React, Node.js, Express, MongoDB, and Socket.IO.
 
-## Current playable progress
+Players can register, create rooms with custom settings, join via room codes, draw in real time with stroke synchronization, chat, submit guesses, and compete on a live scoreboard.
 
-The frontend now has a complete local game shell:
+## Features
 
-- account registration and login flow
-- authenticated home dashboard
-- create-game settings for rounds, time per round, and player limit
-- join-game room code flow
-- a separate board page that is openable from the navigation
-- pointer-based drawing with colors, brush size, eraser, undo, clear, and a round timer
+- **Authentication**: User registration, login, and secure sessions via HTTP-only JWT cookies.
+- **Multiplayer Rooms**: Create private rooms with custom rounds, round duration, and player limits.
+- **Live Waiting Room**: Real-time room synchronization as players join or leave.
+- **Host Ownership**: Only the room host can start the match.
+- **Real-Time Drawing**: Responsive canvas supporting mouse and touch pointer events, normalized coordinates (0..1) for consistent cross-device rendering, custom brush sizes, color palette, eraser, undo, and canvas clear.
+- **Secret Word Security**: Only the assigned drawer receives the secret word. Guessers see masked blanks (`_ _ _ _`).
+- **Scoring System**: Time-based scoring for fast guessers and reward points for the drawer.
+- **Spoiler-Safe Chat**: Room chat with rate limiting. Once a player guesses the word, their chat is hidden from remaining guessers to prevent spoilers.
+- **Game State Automation**: Server-side countdown timers, round transitions, and match completion with winner podium and stats persistence.
+- **Soothing Chill Ambient Music**: Built-in procedural lo-fi ambient audio player powered by the Web Audio API with a toggle in the navigation bar to relax and play together.
 
-Create and join currently open a local board preview rather than a networked room. This is deliberate: the board experience can be tested independently while the Socket.IO room lifecycle is completed.
+## Prerequisites
 
-## Run the applications
+- Node.js (v18+ recommended)
+- MongoDB running locally on `mongodb://127.0.0.1:27017` or a MongoDB Atlas URI
 
-Install dependencies in both application folders, then start each app:
+## Environment Variables
+
+### Backend (`Backend/.env`)
+
+```env
+MONGO_URI=mongodb://127.0.0.1:27017/draw9or9die
+PORT=3000
+JWT_SECRET=fe5d5bf160eff4147030f743e0476acae88438312455fa2e822d9a65f81a97d5
+FRONTEND_URL=http://localhost:5173
+NODE_ENV=development
+```
+
+### Frontend (`Frontend/.env` - optional)
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+## Getting Started
+
+### 1. Start the Backend
 
 ```bash
 cd Backend
 npm install
 npm run dev
+```
 
-cd ../Frontend
+The backend server runs on `http://localhost:3000`. You can verify server and DB health at `http://localhost:3000/api/health`.
+
+To run the automated multiplayer test suite:
+```bash
+npm test
+```
+
+### 2. Start the Frontend
+
+```bash
+cd Frontend
 npm install
 npm run dev
 ```
 
-See [Frontend/README.md](./Frontend/README.md) for the complete local client flow and the next real-time integration boundary.
+The frontend client runs on `http://localhost:5173`.
+
+## How to Test with Multiple Windows
+
+1. Open `http://localhost:5173` in a standard browser window.
+2. Register an account (e.g. `Alice`) and click **Create Game**. Choose your preferred rounds and round time, then click **Create room**.
+3. Copy the generated room code from the waiting room.
+4. Open an Incognito/Private window (or a different browser profile) at `http://localhost:5173`.
+5. Register a second account (e.g. `Bob`) and click **Join Game**. Enter the room code and submit.
+6. Notice the waiting room updates live for both players.
+7. As `Alice` (the host), click **Start Game**.
+8. Both windows will transition into the live game:
+   - The assigned drawer sees the secret word and has drawing tools enabled.
+   - The guesser sees masked word blanks and can submit guesses in the chat box.
+   - Drawing strokes, clear, undo, and timer count down in real time.
+   - When the guesser types the word, points are awarded, a system announcement appears, and the round transitions.
+
+## Notes & Limitations
+
+- At least 2 players are required to start a game.
+- If a drawer disconnects during their turn, the turn ends automatically and passes to the next player.
+- Live active game sessions run in memory on the server for low-latency synchronization, while match histories and user statistics persist in MongoDB.
