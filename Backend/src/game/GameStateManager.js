@@ -236,7 +236,12 @@ export function handleGuess(io, socket, room, messageText) {
 
         syncRoomState(io, room);
 
-        endTurn(io, room, `${player.name} guessed the word!`);
+        const guessers = Array.from(room.players.values()).filter((p) => p.id !== room.drawerId);
+        const allGuessed = guessers.length > 0 && guessers.every((p) => p.guessed);
+
+        if (allGuessed) {
+            endTurn(io, room, "Everyone guessed the word!");
+        }
 
         return { isGuess: true, correct: true };
     }

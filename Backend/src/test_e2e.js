@@ -218,7 +218,7 @@ async function runTests() {
     console.log("✓ Guess verified & scored:", scoreAnnouncement);
 
     if (roundEndedWord !== secretWordReceived) {
-        throw new Error("Round ended event was not received after the correct guess!");
+        throw new Error("Round ended event was not received after all guessers guessed!");
     }
     const guesserState = roundEndState?.players?.find((player) => player.id === guesserSocket.id);
     if (!guesserState || guesserState.score <= 0) {
