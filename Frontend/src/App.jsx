@@ -256,20 +256,6 @@ function App() {
         </button>
         <nav className="topbar-actions" aria-label="Main navigation">
           <button className="nav-link" onClick={() => navigate("home")}>Home</button>
-          <button
-            className="nav-link"
-            onClick={() => {
-              if (roomState && (roomState.status === "DRAWING" || roomState.status === "ROUND_END")) {
-                navigate("drawing");
-              } else if (roomState) {
-                navigate("waiting");
-              } else {
-                openAuthenticated("create");
-              }
-            }}
-          >
-            Board
-          </button>
 
           {user ? (
             <>
