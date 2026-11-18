@@ -425,6 +425,46 @@ select:focus {
   font-weight: 600;
 }
 
+.player-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 28px 0 16px;
+}
+
+.player-stats article {
+  min-height: 112px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.84);
+  border: 3px solid var(--ink);
+  border-radius: 18px 8px 20px 10px;
+  box-shadow: 4px 4px 0 var(--pink);
+}
+
+.player-stats article:nth-child(2) {
+  box-shadow: 4px 4px 0 var(--yellow);
+}
+
+.player-stats article:nth-child(3) {
+  box-shadow: 4px 4px 0 var(--blue);
+}
+
+.player-stats strong {
+  font-size: 2.1rem;
+  line-height: 1;
+  color: var(--pink);
+  font-family: "Marker Felt", "Comic Sans MS", sans-serif;
+}
+
+.player-stats span {
+  color: #4a4a68;
+  font-weight: 800;
+  text-align: center;
+}
+
 .feature-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1374,6 +1414,10 @@ select:focus {
     margin-top: 20px;
   }
 
+  .player-stats {
+    grid-template-columns: 1fr;
+  }
+
   .waiting-details {
     grid-template-columns: 1fr;
   }
@@ -1474,6 +1518,7 @@ button:hover {
 }
 
 .feature-row article,
+.player-stats article,
 .waiting-details div,
 .player-row,
 .game-player-item,
@@ -1496,7 +1541,8 @@ button:hover {
 .board-footer,
 .chat-empty,
 .modal-word-reveal,
-.chat-text {
+.chat-text,
+.player-stats span {
   color: var(--dark-muted);
 }
 

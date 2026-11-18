@@ -64,8 +64,19 @@ export function AuthProvider({ children }) {
     disconnectSocket();
   }, []);
 
+  const refreshStats = useCallback(async () => {
+    try {
+      const data = await getMe();
+      if (data?.user) {
+        setUserStats(data.user.stats || null);
+      }
+    } catch {
+      // Keep the last known stats if the session refresh fails.
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, userStats, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, userStats, loading, login, logout, refreshStats }}>
       {children}
     </AuthContext.Provider>
   );
