@@ -1,5 +1,10 @@
 # Draw or Die: Development Journal
 
+**Last updated:** 2026-11-18
+**Previous journal update:** 2026-11-17
+**Time since previous update:** 1 day (less than 1 week)
+**Journal format:** Weekly development summary
+
 ## Introduction
 
 This journal records the problems encountered while developing **Draw or Die** and the progress completed so far. The project is a multiplayer drawing-and-guessing game built with React, Node.js, Express, MongoDB, and the planned Socket.IO real-time layer.
@@ -122,7 +127,7 @@ The local shell has been successfully converted into a complete, reliable online
    - Verified frontend linting (`npm run lint`) and production build (`npm run build`).
    - Implemented automated end-to-end multiplayer test suite (`Backend/src/test_e2e.js`) covering user registration, login, cookie sessions, socket auth, room creation, multi-client joining, host-only game start, drawer/guesser secret word isolation, stroke synchronization, guess scoring, and disconnect handling.
 
-## 10. Smooth Onboarding Flow & Soothing Ambient Music
+## 10. Smooth Onboarding Flow & Game Audio
 
 1. **Seamless Login & Signup Journey**:
    - Registration now automatically establishes the authenticated cookie session and navigates directly to the Home page, removing redundant manual login steps.
@@ -132,9 +137,81 @@ The local shell has been successfully converted into a complete, reliable online
    - Real-time waiting room lists each connected player as they join or leave with avatar initials, usernames, and a `(You)` tag for self-identification.
    - The "Start Now ➔" button is exclusively accessible to the host. Non-host players see an informative status indicator waiting for the host to launch the game.
 
-3. **Soothing Ambient Lo-Fi Chill Synthesizer (`chillAudio.js`)**:
-   - Built a lightweight, dependency-free procedural audio generator using the native Web Audio API.
-   - Generates peaceful, warm lo-fi chords (Fmaj7 - Dm9 - Bbmaj7 - C9sus) with dual detuned sine/triangle oscillators, a 680Hz low-pass filter, subtle feedback delay, and randomized pentatonic chimes.
-   - Controlled via a minimalistic toggle button in the top navigation bar with pause/resume and zero network download overhead.
+3. **Event-based Game Audio (`gameAudio.js`)**:
+   - Removed continuous background chill music.
+   - Added a success sound when the correct word is guessed.
+   - Added a chat notification sound for every incoming chat message.
+   - Added ticking sounds during the final 10 seconds of a round.
+   - Sounds are generated through the native Web Audio API without external audio downloads.
+
+## 11. Weekly Update - 2026-11-17 to 2026-11-18
+
+### Time passed
+
+- Previous journal update: 2026-11-17
+- This update: 2026-11-18
+- Elapsed time: 1 day, which is less than one full week
+
+### Gameplay rules
+
+- Correct guesses award points immediately based on the remaining round time.
+- The round continues until all non-drawer players have guessed or the timer reaches zero.
+- Correct guessers stop leaking the secret word in normal chat.
+- Drawer order is randomly shuffled at game start instead of always following host order.
+- The round timer produces urgent ticking feedback during the final 10 seconds.
+
+### Expanded word bank
+
+The server word bank was expanded to 160 words and organized into categories:
+
+- 20 Easy words
+- 20 Medium words
+- 20 Difficult words
+- 15 Funny words
+- 15 Technology words
+- Additional legacy words retained for variety
+
+`wordBank.js` now exports the category arrays separately and combines them into the main `WORDS` pool. Random selection still avoids recently used words during the active game.
+
+### Homepage and navigation changes
+
+- Removed the unused Board button from the top navigation.
+- Added a dark, polished home dashboard.
+- Added responsive player statistics for authenticated users:
+  - Matches played
+  - Matches won
+  - Overall correct guesses
+- Added automatic frontend stat refresh after correct guesses and completed games.
+
+### Player and match statistics
+
+MongoDB uses separate collections for different purposes:
+
+- `users` stores authentication details and cumulative player statistics.
+- `matches` stores completed-match history, rankings, scores, and winner information.
+
+The overall correct-guesses count is stored as `stats.correctGuesses`. Match completion updates `stats.gamePlayed`, `stats.gameWon`, and `stats.totalScore`.
+
+The screenshot and local test environment showed a `test` database because the MongoDB URI did not include an explicit database name. The intended production database is `draw9or9die`. The production connection string should specify that database directly:
+
+```text
+mongodb+srv://USERNAME:PASSWORD@CLUSTER.mongodb.net/draw9or9die
+```
+
+The `test` database contains test-suite records such as `alice_test` and `bob_test`. It is not a second app user system and can be removed or ignored once the application uses an explicit database name.
+
+### Chat and layout fixes
+
+- Constrained the game chat panel with a fixed height.
+- Added internal scrolling to the message area so long conversations do not extend the page.
+- Added a soft notification sound for every incoming chat message.
+
+### Verification
+
+- Frontend lint passes.
+- Frontend production build passes.
+- Expanded word bank verified with 160 available words.
+- Multiplayer end-to-end tests passed for the earlier full-suite run.
+- A later local backend test run was blocked by MongoDB SRV DNS resolution at the configured Atlas hostname.
 
 
