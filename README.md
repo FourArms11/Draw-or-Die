@@ -27,9 +27,9 @@ Players can register, create rooms with custom settings, join via room codes, dr
 ### Backend (`Backend/.env`)
 
 ```env
-MONGO_URI=mongodb://127.0.0.1:27017/draw9or9die
-PORT=3000
-JWT_SECRET=fe5d5bf160eff4147030f743e0476acae88438312455fa2e822d9a65f81a97d5
+MONGO_URI=mongodb url
+PORT= your port
+JWT_SECRET=you secret
 FRONTEND_URL=http://localhost:5173
 NODE_ENV=development
 ```
