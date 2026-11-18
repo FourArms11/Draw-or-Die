@@ -4,7 +4,7 @@ import { handleGuess } from "../game/GameStateManager.js";
 const RATE_LIMIT_MS = 350;
 
 export function registerChatHandlers(io, socket) {
-    socket.on("send_message", (rawMessage) => {
+    socket.on("send_message", async (rawMessage) => {
         try {
             const room = getRoomBySocketId(socket.id);
             if (!room) return;
@@ -25,7 +25,7 @@ export function registerChatHandlers(io, socket) {
 
             if (isDrawing) {
                 // If it's a correct guess, handleGuess processes it and broadcasts system announcement
-                const guessResult = handleGuess(io, socket, room, text);
+                const guessResult = await handleGuess(io, socket, room, text);
                 if (guessResult.isGuess && guessResult.correct) {
                     return; // Don't broadcast the actual word in the chat stream
                 }

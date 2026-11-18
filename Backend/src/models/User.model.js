@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
         totalScore: {
             type: Number,
             default: 0
+        },
+        correctGuesses: {
+            type: Number,
+            default: 0
         }
     }
 });

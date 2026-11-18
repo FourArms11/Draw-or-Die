@@ -25,7 +25,7 @@ function App() {
   const [gameOverInfo, setGameOverInfo] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { user, login, logout } = useAuth();
+  const { user, userStats, login, logout, refreshStats } = useAuth();
 
   const navigate = useCallback((nextPage) => {
     setPage(nextPage);
@@ -86,6 +86,7 @@ function App() {
     const handleRoundEnded = (info) => {
       setRoundEndInfo(info);
       setCurrentWord("");
+      refreshStats();
       if (info.reason?.includes("guessed the word")) {
         playGuessSuccess();
       }
@@ -94,10 +95,14 @@ function App() {
     const handleGameEnded = (info) => {
       setGameOverInfo(info);
       setCurrentWord("");
+      refreshStats();
     };
 
     const handleChatMessage = (msg) => {
       setMessages((prev) => [...prev, msg]);
+      if (msg.system && msg.text?.includes("guessed the word")) {
+        refreshStats();
+      }
       playChatMessage();
     };
 
@@ -133,7 +138,7 @@ function App() {
       socket.off("game_error", handleGameError);
       socket.off("kicked", handleKicked);
     };
-  }, [user, page, logout]);
+  }, [user, page, logout, refreshStats]);
 
   // Signup -> immediately logged in and taken to Home
   const handleRegister = async (form) => {
@@ -345,6 +350,7 @@ function App() {
       {page === "home" && (
         <HomePage
           user={user}
+          userStats={userStats}
           notice={notice}
           onCreate={() => openAuthenticated("create")}
           onJoin={() => openAuthenticated("join")}
@@ -459,7 +465,7 @@ function WaitingRoom({
   );
 }
 
-function HomePage({ user, notice, onCreate, onJoin }) {
+function HomePage({ user, userStats, notice, onCreate, onJoin }) {
   return (
     <div className="home-page">
       <section className="hero">
@@ -478,6 +484,22 @@ function HomePage({ user, notice, onCreate, onJoin }) {
           <img src="/logo.png" alt="" />
         </div>
       </section>
+      {user && (
+        <section className="player-stats" aria-label="Your player statistics">
+          <article>
+            <strong>{userStats?.gamePlayed || 0}</strong>
+            <span>Matches Played</span>
+          </article>
+          <article>
+            <strong>{userStats?.gameWon || 0}</strong>
+            <span>Matches Won</span>
+          </article>
+          <article>
+            <strong>{userStats?.correctGuesses || 0}</strong>
+            <span>Correct Guesses</span>
+          </article>
+        </section>
+      )}
       <section className="feature-row">
         <article><h2>Set the rules</h2><p>Choose rounds, time, and how many friends can join.</p></article>
         <article><h2>Draw together</h2><p>Use colors, brush sizes, and a real canvas that works with mouse or touch.</p></article>

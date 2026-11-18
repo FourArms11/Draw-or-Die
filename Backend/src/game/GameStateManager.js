@@ -164,6 +164,23 @@ export async function endGame(io, room, reason = "Game completed") {
 
     syncRoomState(io, room);
 
+    // Save match and update player stats in MongoDB when a database is available.
+    if (isDbConnected() && ranking.length > 0) {
+        await Promise.all(
+            ranking.map(async (p, idx) => {
+                if (p.userId) {
+                    await UserModel.findByIdAndUpdate(p.userId, {
+                        $inc: {
+                            "stats.gamePlayed": 1,
+                            "stats.totalScore": p.score,
+                            "stats.gameWon": idx === 0 && p.score > 0 ? 1 : 0,
+                        },
+                    });
+                }
+            })
+        );
+    }
+
     // Save match and update user stats in MongoDB if available
     if (isDbConnected() && ranking.length > 0 && ranking.some(p => p.score > 0)) {
         try {
@@ -180,26 +197,13 @@ export async function endGame(io, room, reason = "Game completed") {
                 winnerUserId: winner.userId || null,
             });
 
-            await Promise.all(
-                ranking.map(async (p, idx) => {
-                    if (p.userId) {
-                        await UserModel.findByIdAndUpdate(p.userId, {
-                            $inc: {
-                                "stats.gamePlayed": 1,
-                                "stats.totalScore": p.score,
-                                "stats.gameWon": idx === 0 && p.score > 0 ? 1 : 0,
-                            },
-                        });
-                    }
-                })
-            );
         } catch (dbError) {
             console.error("Failed to save match results:", dbError.message);
         }
     }
 }
 
-export function handleGuess(io, socket, room, messageText) {
+export async function handleGuess(io, socket, room, messageText) {
     if (!room || room.status !== "DRAWING") return { isGuess: false };
 
     const player = room.players.get(socket.id);
@@ -223,6 +227,14 @@ export function handleGuess(io, socket, room, messageText) {
 
         const guessScore = calculateGuesserScore(room.timeRemaining, room.settings.time);
         player.score += guessScore;
+
+        if (isDbConnected() && player.userId) {
+            await UserModel.findByIdAndUpdate(player.userId, {
+                $inc: { "stats.correctGuesses": 1 },
+            }).catch((dbError) => {
+                console.error("Failed to update correct guess count:", dbError.message);
+            });
+        }
 
         const drawer = room.players.get(room.drawerId);
         if (drawer) {
