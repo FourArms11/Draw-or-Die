@@ -1550,6 +1550,10 @@ button:hover {
   color: var(--dark-muted);
 }
 
+.chat-author {
+  color: #f5f3fa;
+}
+
 .waiting-details strong,
 .game-player-item,
 .player-name {
