@@ -2,7 +2,7 @@
 
 ## Socket connects to the wrong server or as a guest
 
-**Status: Hypothetical diagnostic.**
+
 
 Check the frontend URL, credential support, and authentication data before connecting:
 
@@ -22,7 +22,7 @@ If HTTP works but room events do not, check the browser's socket errors and veri
 
 ## Client/server score or timer desynchronization
 
-**Status: Hypothetical diagnostic; current scoring is server-authoritative.**
+**Status: Current scoring is server-authoritative.**
 
 Do not calculate or award score from a browser's local countdown. The server uses its own remaining time, updates the player's score, then broadcasts room state:
 
