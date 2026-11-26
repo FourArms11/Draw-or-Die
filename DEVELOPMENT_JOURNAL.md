@@ -1,13 +1,13 @@
 # Draw or Die: Development Journal
 
-**Last updated:** 2026-11-18
-**Previous journal update:** 2026-11-17
-**Time since previous update:** 1 day (less than 1 week)
+**Last updated:** 2026-11-26
+**Previous journal update:** 2026-11-18
+**Time since previous update:** 8 days (just over 1 week)
 **Journal format:** Weekly development summary
 
 ## Introduction
 
-This journal records the problems encountered while developing **Draw or Die** and the progress completed so far. The project is a multiplayer drawing-and-guessing game built with React, Node.js, Express, MongoDB, and the planned Socket.IO real-time layer.
+This journal records the problems encountered while developing **Draw or Die** and the progress completed so far. The project is a multiplayer drawing-and-guessing game built with React, Node.js, Express, MongoDB, and Socket.IO.
 
 ## 1. Project structure and setup
 
@@ -214,4 +214,54 @@ The `test` database contains test-suite records such as `alice_test` and `bob_te
 - Multiplayer end-to-end tests passed for the earlier full-suite run.
 - A later local backend test run was blocked by MongoDB SRV DNS resolution at the configured Atlas hostname.
 
+## 12. Weekly Update - 2026-11-18 to 2026-11-26
+
+### Time passed
+
+- Previous journal update: 2026-11-18
+- This update: 2026-11-26
+- Elapsed time: 8 days, just over one week
+
+### Dark-theme text visibility
+
+While checking the dark game and waiting-room screens, some text used the default dark foreground color on dark raised cards. This was a visual contrast problem rather than a JavaScript exception: room settings, player names, and player-list text could be difficult to read.
+
+The dark-theme rules now explicitly set light foreground colors for those elements and retain a softer muted color for waiting-room labels:
+
+```css
+.waiting-details span {
+  color: var(--dark-muted);
+}
+
+.waiting-details strong,
+.game-player-item,
+.player-name {
+  color: #f5f3fa;
+}
+```
+
+### Chat author names
+
+Chat messages already used the dark raised-card background, but the author name kept the base light-theme color (`var(--ink)`). That combination could make who-sent-this part of a message hard to distinguish from the background, including in spoiler-hidden messages.
+
+The dark-theme stylesheet now overrides the author color while leaving message text on its existing muted-color rule:
+
+```css
+.chat-author {
+  color: #f5f3fa;
+}
+```
+
+Both regular messages and hidden-message rows use the same `.chat-author` class, so this override covers both display paths without changing chat or spoiler behavior.
+
+### Edge cases and development notes
+
+- **Observed and fixed:** dark surfaces need explicit foreground colors for important text; relying on light-theme defaults can make room settings, player names, and chat authors low-contrast.
+- **Covered by the same fix:** player names remain legible in the live player list, including the current player's row; sender names remain legible in both normal and spoiler-hidden chat rows.
+- **Potential regression check:** when adding a new dark card or changing a component background, check its labels, values, names, and message text in dark mode as well as light mode. A readable card background alone does not guarantee readable child text.
+
+### Verification
+
+- The changes were targeted CSS color overrides; no game rules, chat payloads, or server behavior changed.
+- The repository history confirms the waiting-room/player text and chat-author visibility fixes on 2026-11-26.
 
