@@ -23,7 +23,7 @@ if (allGuessed) {
 
 ## Match works, but statistics/history are missing
 
-**Status: Hypothetical diagnostic based on the current offline behavior.**
+
 
 If MongoDB is disconnected, multiplayer can run in memory but database-backed statistics and match history are skipped. Check `/api/health` and use a URI with the intended database name:
 
